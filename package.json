@@ -1,0 +1,16 @@
+{
+  "name": "week12-redo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && npm start",
+    "dev:client": "cd client && npm start",
+    "dev:server": "cd server && npm run dev",
+    "preinstall": "cd server && npm install",
+    "install": "cd server && npm install",
+    "build":"cd client && npm run build"
+  },
+  "author": "",
+  "license": "ISC"
+}
