@@ -76,6 +76,18 @@ body {
   margin-left: 0.5%;
   margin-top: 10px;
 }
+
+.image-preview {
+  margin-bottom: 20px; /* Add some space below the image */
+}
+
+.image-preview img {
+  max-width: 100%; /* Ensure the image doesn't exceed its container width */
+  max-height: 200px; /* Limit the maximum height of the image */
+  display: block; /* Ensure the image is displayed as a block element */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
 .edit-info-page {
     display: flex;
     flex-direction: column;
