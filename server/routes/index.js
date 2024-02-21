@@ -59,8 +59,11 @@ router.post('/api/login', async function(req, res) {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
-    // Send a JSON response indicating successful login
-    res.status(200).json({ message: 'Login successful' });
+    // If username and password are correct, generate a JWT token
+    const token = jwt.sign({ username }, secretKey);
+
+    // Send a JSON response with the token
+    res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }

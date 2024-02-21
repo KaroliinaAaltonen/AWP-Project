@@ -10,6 +10,7 @@ function Header() {
   useEffect(() => {
     // Retrieve the authentication token from local storage
     const authToken = localStorage.getItem('authToken');
+    console.log(authToken);
     if (authToken) {
       // Decode the JWT token to extract the username
       const decodedToken = jwtDecode(authToken);

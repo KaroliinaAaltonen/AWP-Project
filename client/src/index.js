@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createRoot } from 'react-dom/client'; // Import createRoot from react-dom
 import App from './App';
 import RegistrationPage from './RegistrationPage';
 import MainPage from './MainPage';
@@ -9,7 +9,7 @@ import DisplayChatsPage from './DisplayChatsPage';
 import NotFound from './NotFound';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
@@ -21,8 +21,7 @@ ReactDOM.render(
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 reportWebVitals();
