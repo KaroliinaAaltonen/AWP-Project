@@ -1,0 +1,114 @@
+/*                    global css                          */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color:#BDD7EE;
+}           
+/*                    global css                          */
+
+/*                 Header.js styling                      */
+.header-container {
+  background-color: #BDD8FF; /* Light shade of blue */
+  border-bottom: 1px solid #ddd; /* Add a bottom border */
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: space-between; /* evenly space items */
+  align-items: center;
+}
+
+.nav-item {
+  margin-left: 10px; /* Adjust spacing between nav items */
+}
+
+.nav-link {
+  color: #000000; /* Change color of nav links */
+  text-decoration: none; /* Remove underline */
+  padding: 10px 15px; /* Add padding around nav links */
+  border-radius: 5px; /* Add some border radius for rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.nav-link:hover {
+  background-color: #4682b4; /* Change background color on hover */
+}
+
+.navbar-brand {
+  color: #000000; /* Change color of brand link */
+  font-weight: bold; /* Add some boldness to the brand link */
+  text-decoration: none; /* Remove underline */
+}
+/*                 Header.js styling                      */
+
+/*                 Login Page styling (App.js)            */
+#login-page-container {
+  width: 800px; /* Adjust the maximum width as needed */
+}
+
+.card {
+  border-radius: 10px; /* Add some border radius to the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a slight shadow to the card */
+}
+
+.card-title {
+  margin-bottom: 1.5rem; /* Add some bottom margin to the card title */
+}
+
+#login-btn, #register-btn{
+  margin: 5%;
+}
+/*                 Login Page styling (App.js)            */
+
+/*                 Registration Page styling (RegistrationPage.js)            */
+#register-page-container {
+  width: 900px; /* Adjust the maximum width*/
+}
+
+#registration-view-btn{
+  margin: 2%; /* I don't want the button to touch the password field */
+}
+
+/*                 Registration Page styling (RegistrationPage.js)            */
+
+
+/*                 EditInfoPage.js styling                */
+.existing-user-info{
+  margin-left: 0.5%;
+  margin-top: 10px;
+}
+.edit-info-page {
+    display: flex;
+    flex-direction: column;
+    align-items: left; /* Align items vertically */
+    justify-content: flex-start; /* Align items from the top */
+    height: 100vh; /* Set height to 100% of the viewport height */
+}
+.form-group{
+    padding: 0.5%;
+}
+
+.form-group#info-text-field {
+    display: inline-block;
+    width: 900px;
+    overflow: auto;
+}
+
+.form-group#info-text-field textarea {
+    height: auto; /* Set height to auto */
+    min-height: 50px; /* Set a minimum height */
+    resize: none; /* Disable resizing */
+}
+#upload-image-div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+#upload-image-label {
+    margin-bottom: 5px; /* Add some space between label and input */
+  }
+
+#edit-info-save-button {
+    margin-top: 2%;
+    margin-left: 0.5%;
+}
+/*                 EditInfoPage.js styling                */

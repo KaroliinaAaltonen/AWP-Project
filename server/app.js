@@ -16,27 +16,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const mongoDB = "mongodb://127.0.0.1:27017/books"
-mongoose.connect(mongoDB);
+const mongoDB = "mongodb://127.0.0.1:27017/users"
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true }); // Add useNewUrlParser and useUnifiedTopology options
 mongoose.Promise = Promise;
 const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error"))
-
-if (process.env.NODE_ENV === "development") {
-    var corsOptions = {
-        origin: "http://localhost:3000",
-        optionsSuccessStatus: 200,
-    };
-    app.use(cors(corsOptions))
-} else if (process.env.NODE_ENV === "production") {
-    // Serve static files from the React build directory
-    app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
-
-    // Handle other routes by serving the React app
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
-    });
-}
+db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
