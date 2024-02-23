@@ -11,33 +11,21 @@ const secretKey = 'your-secret-key'; // Define a secret key for JWT
 // Serve static files from the 'uploads' directory
 router.use('/api/profileImage', express.static(path.join(__dirname, 'uploads')));
 
-// user-object in the database has a unique name and a password
+// MongoDB schema for users
 const usersSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: { type: String },
   profileImage: { type: String },
   userInfo: { type: String }
 });
-
-const User = mongoose.model('User', usersSchema);
-
-// Route to get user information by username
-router.get('/api/userInfo/:username', async (req, res) => {
-  try {
-    const username = req.params.username;
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Return user information including the profile image URL
-    res.status(200).json({ userInfo: user });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+// MongoDB schema for user likes (matches)
+const likeSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  likedUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
+const User = mongoose.model('User', usersSchema);
+const Match = mongoose.model('Match', likeSchema);
 
 // Register a new user
 router.post('/api/register', async function(req, res) {
@@ -63,7 +51,6 @@ router.post('/api/register', async function(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 // Login user
 router.post('/api/login', async function(req, res) {
   try {
@@ -90,7 +77,84 @@ router.post('/api/login', async function(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Route to get random user from database
+router.get('/api/randomUser/:username', async (req, res) => {
+  try {
+    const currLogInUser = req.params.username;
+    // Fetch a random user excluding the currently logged-in user
+    const user = await User.aggregate([
+      { $match: { username: { $ne: currLogInUser } } }, // Exclude current user
+      { $sample: { size: 1 } } // Get a random user
+    ]);
+    if (!user || user.length === 0) {
+      return res.status(404).json({ error: 'Random user not found' });
+    }
+    // Return user information including the profile image URL
+    res.status(200).json({ userInfo: user[0] });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Route to handle user likes
+router.post('/api/like/:likedUserId/:username', async (req, res) => {
+  try {
+    const currentUserUsername = req.params.username;
+    if (!currentUserUsername) {
+      return res.status(401).json({ error: 'Unauthorized: Missing current user' });
+    }
 
+    // Find the current user in the database
+    const currentUser = await User.findOne({ username: currentUserUsername });
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Current user not found' });
+    }
+
+    const { likedUserId } = req.params;
+
+    // Check if the like already exists
+    const existingLike = await Match.findOne({ user: currentUser._id, likedUser: likedUserId });
+    if (existingLike) {
+      return res.status(400).json({ error: 'You have already liked this user' });
+    }
+
+    // Create a new like entry
+    const newLike = new Match({
+      user: currentUser._id,
+      likedUser: likedUserId
+    });
+
+    // Save the new like
+    await newLike.save();
+
+    // Check if there is a match
+    const reverseLike = await Match.findOne({ user: likedUserId, likedUser: currentUser._id });
+    if (reverseLike) {
+      return res.status(200).json({ message: 'User liked successfully', match: true });
+    }
+
+    res.status(200).json({ message: 'User liked successfully', match: false });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Route to get user information by username
+router.get('/api/userInfo/:username', async (req, res) => {
+  try {
+    const username = req.params.username;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return user information including the profile image URL
+    res.status(200).json({ userInfo: user });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 // Route to handle updating user info
 router.post('/api/updateUserInfo', formidable(), async (req, res) => {
   try {
@@ -130,7 +194,7 @@ router.post('/api/updateUserInfo', formidable(), async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
+// Function to delete duplicate images from storage (simply based to filename so not the best solution)
 async function deleteImageFromStorage(imagePath) {
   try {
     // Check if the file exists
@@ -145,7 +209,7 @@ async function deleteImageFromStorage(imagePath) {
     console.error('Error deleting image:', error);
   }
 }
-
+// Function to save an image from storage (simply with the original filename so not the best solution)
 async function saveImageToStorage(imagePath, originalFileName) {
   try {
     // Define the directory where uploaded files will be stored
