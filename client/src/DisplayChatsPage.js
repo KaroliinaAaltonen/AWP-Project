@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import Header from './Header';
+// client/src/DisplayChatsPage.js
+import React, { useEffect, useState } from 'react'; // Import features from react
+import Header from './Header'; // Import the Header component
 import ChatView from './ChatView'; // Import the ChatView component
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode for decoding JWT tokens
+import { useTranslation } from 'react-i18next'; // Import translation hook
 
 function DisplayChatsPage() {
-  const [chats, setChats] = useState([]);
-  const [currentUser, setCurrentUser] = useState('');
+  const { t } = useTranslation(); // Initialize translation hook
+  const [chats, setChats] = useState([]); // State variable for chats
+  const [currentUser, setCurrentUser] = useState(''); // State variable for current user
   const [selectedChat, setSelectedChat] = useState(null); // State to manage selected chat
 
   // Function to extract username from JWT token
   const usernameFromToken = () => {
-    const authToken = localStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken'); // Retrieve authentication token from local storage
     if (!authToken) {
-      console.error('Authentication token not found');
+      console.error('Authentication token not found'); // Log error if authentication token is not found
       return null;
     }
-    const decodedToken = jwtDecode(authToken);
-    return decodedToken.username;
+    const decodedToken = jwtDecode(authToken); // Decode JWT token
+    return decodedToken.username; // Return the username extracted from the token
   };
 
   // Function to fetch username based on user ID
@@ -37,8 +40,8 @@ function DisplayChatsPage() {
     // Fetch chats from backend
     const fetchData = async () => {
       try {
-        const username = usernameFromToken();
-        setCurrentUser(username);
+        const username = usernameFromToken(); // Get current user's username from the token
+        setCurrentUser(username); // Set the current user state
         const response = await fetch(`/api/conversations/${username}`, {
           method: 'GET',
           headers: {
@@ -55,13 +58,13 @@ function DisplayChatsPage() {
           return { ...chat, participants: updatedParticipants };
         }));
         
-        setChats(updatedChats);
+        setChats(updatedChats); // Update chats state with fetched chats
       } catch (error) {
         console.error('Error fetching chats:', error);
       }
     };
     fetchData();
-  }, []);
+  }, []); // Run this effect once when the component mounts
 
   // Function to handle chat selection
   const handleChatSelection = (chatId) => {
@@ -70,9 +73,9 @@ function DisplayChatsPage() {
 
   return (
     <div>
-      <Header />
+      <Header /> {/* Render the Header component */}
       <div className="title-container">
-        <h2>Your Conversations</h2>
+        <h2>{t('conversations')}</h2>
         <div className="chat-container">
           <div className="matches-list">
             {chats.length > 0 ? (
@@ -82,7 +85,7 @@ function DisplayChatsPage() {
                 </div>
               ))
             ) : (
-              <p>If you see this message you need to secure some matches before chatting</p>
+              <p>{t('no matches')}</p>
             )}
           </div>
           <div className="chat-view">

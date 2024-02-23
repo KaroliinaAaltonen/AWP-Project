@@ -1,0 +1,28 @@
+{
+    "login": "Kirjaudu sisään",
+    "username": "Käyttäjänimi",
+    "password": "Salasana",
+    "register": "Rekisteröidy",
+    "edit info": "Muokkaa Tietojasi",
+    "display chats": "Näytä Keskustelut",
+    "log out": "Kirjaudu Ulos",
+    "language": "kieli",
+    "skinder for": "SKINDERISI",
+    "information": "tiedot",
+    "new info": "Syötä vapaa kuvaus itsestäsi",
+    "upload image": "Lataa Kuva:",
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "conversations": "Keskustelusi",
+    "no matches": "Jos näet tämän ilmoituksen, sinun täytyy hankkia mätsejä ennen chättäilyn aloittamista.",
+    "crickets": "*heinäsirkkoja*",
+    "type message": "kirjoita viestisi tähän",
+    "send": "Lähetä",
+    "like": "Tykkää",
+    "dislike": "En tykkää",
+    "match alert": "HERRANJESTAS TÄÄHÄN ON MÄTSI",
+    "keep scrolling": "Jatka skrollaamista",
+    "message them": "Lähetä hänelle viesti",
+    "register new user": "Rekisteröi uusi käyttäjä"
+  }
+  

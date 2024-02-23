@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// client/src/RegistrationPage.js
+import React, { useState } from 'react'; // Import features from React
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook from react-router-dom
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import { useTranslation } from 'react-i18next'; // Import useTranslation hook from react-i18next
 
 function RegistrationPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
+  const { t } = useTranslation(); // Initialize translation hook
+  const [username, setUsername] = useState(''); // State variable for username
+  const [password, setPassword] = useState(''); // State variable for password
+  const [errorMessage, setErrorMessage] = useState(''); // State variable for error message
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleRegister = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission behavior
     try {
       const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }) // Send username and password in JSON format
       });
-      const data = await response.json();
+      const data = await response.json(); // Parse response data
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to register');
+        throw new Error(data.error || 'Failed to register'); // Throw an error if registration fails
       }
       // Redirect to login page after successful registration
       navigate('/');
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage(error.message); // Set error message state if an error occurs
     }
   };
 
@@ -34,10 +37,10 @@ function RegistrationPage() {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h1 className="card-title text-center mb-4">Register a New User</h1>
+              <h1 className="card-title text-center mb-4">{t('register new user')}</h1>
               <form onSubmit={handleRegister}>
                 <div className="form-group">
-                  <label htmlFor="username">Username:</label>
+                  <label htmlFor="username">{t('username')}:</label>
                   <input 
                     type="text" 
                     id="username" 
@@ -49,7 +52,7 @@ function RegistrationPage() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password">Password:</label>
+                  <label htmlFor="password">{t('password')}:</label>
                   <input 
                     type="password" 
                     id="password" 
@@ -61,9 +64,9 @@ function RegistrationPage() {
                   />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary" id="registration-view-btn">Register</button>
+                  <button type="submit" className="btn btn-primary" id="registration-view-btn">{t('register')}</button>
                 </div>
-                {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>}
+                {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>} {/* Display error message if exists */}
               </form>
             </div>
           </div>

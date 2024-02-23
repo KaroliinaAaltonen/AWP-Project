@@ -1,10 +1,13 @@
-// Inside MainPage component
+// client/src/MainPage.js
 import React, { useEffect, useState, useCallback } from 'react';
 import Header from './Header';
 import { jwtDecode } from "jwt-decode";
-import './main.css'; // Import CSS file for styling
+import './main.css';
+import { useTranslation } from 'react-i18next';
 
 function MainPage() {
+  const { t } = useTranslation(); // i18n
+  // set states
   const [randomUser, setRandomUser] = useState(null);
   const [showMatchText, setShowMatchText] = useState(false);
   const [matchUsers, setMatchUsers] = useState({});
@@ -20,6 +23,8 @@ function MainPage() {
     return decodedToken.username;
   };
 
+  // Functions to get random user from the back-end database
+  // And set the suggested profile to a user that is not the current authenticated user
   const fetchRandomUser = useCallback(async (currentUser) => {
     try {
       const username = usernameFromToken();
@@ -50,6 +55,8 @@ function MainPage() {
     }
   };
 
+  // When user is liked, it is written to the database in the back-end
+  // If the liked user had already liked the current authenticated user a match is alerted
   const handleLike = async () => {
     if (randomUser) {
       const authToken = localStorage.getItem('authToken');
@@ -70,12 +77,14 @@ function MainPage() {
     }
   };
 
+  // Dislike doesn't do anything other than show next random profile
   const handleDislike = () => {
     if (randomUser) {
       fetchRandomUser(randomUser.username);
     }
   };
-
+ // After match is alerted the user can send a message to them or keep scrolling
+ // On keep scrolling click the match alert view is just closed
   const handleKeepScrolling = () => {
     setShowMatchText(false);
     setMatchUsers({});
@@ -85,6 +94,7 @@ function MainPage() {
     fetchRandomUser();
   }, [fetchRandomUser]);
 
+  // Get current authenticated user object so that their image can be set on match
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -104,37 +114,59 @@ function MainPage() {
 
   return (
     <div>
+      {/* Render the Header component */}
       <Header />
+  
+      {/* Render the container for user-related content */}
       <div className="user-container">
+        {/* Conditionally render user card if randomUser exists */}
         {randomUser && (
           <div className="user-card">
+            {/* Display user profile image */}
             <img src={randomUser.profileImage} alt="User" className="user-image" />
+            
+            {/* Display user name */}
             <h3 className="user-name">{randomUser.username}</h3>
+            
+            {/* Display user info */}
             <p className="user-info">{randomUser.userInfo}</p>
+            
+            {/* Button group for user actions */}
             <div className="button-group">
-              <button onClick={handleLike} className="like-button">Like</button>
-              <button onClick={handleDislike} className="dislike-button">Dislike</button>
+              {/* Button to like user */}
+              <button onClick={handleLike} className="like-button">{t('like')}</button>
+              
+              {/* Button to dislike user */}
+              <button onClick={handleDislike} className="dislike-button">{t('dislike')}</button>
             </div>
           </div>
         )}
       </div>
+  
+      {/* Display match overlay if showMatchText is true */}
       {showMatchText && (
         <div className="match-overlay">
+          {/* Display matched users' profile images */}
           <div className="match-images">
             <img src={matchUsers.currentUser.profileImage} alt="Current User" className="match-image" />
             <img src={matchUsers.likedUser.profileImage} alt="Liked User" className="match-image" />
           </div>
+          
+          {/* Display match text and buttons */}
           <div className="match-text">
-            <h2>OMG THIS IS A MATCH</h2>
+            <h2>{t('match alert')}</h2>
             <div className="button-group">
-              <button onClick={handleKeepScrolling}>Keep Scrolling</button>
-              <a href="/chats"><button>Message Them</button></a>
+              {/* Button to keep scrolling */}
+              <button onClick={handleKeepScrolling}>{t('keep scrolling')}</button>
+              
+              {/* Button to message matched user */}
+              <a href="/chats"><button>{t('message them')}</button></a>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-}
+}  
 
 export default MainPage;
