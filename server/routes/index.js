@@ -23,10 +23,19 @@ const likeSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   likedUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
+// MongoDB schema for chat logs
+const chatlogSchema = new mongoose.Schema({
+  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  messages: [{
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    content: String,
+    timestamp: { type: Date, default: Date.now }
+  }]
+});
 
 const User = mongoose.model('User', usersSchema);
 const Match = mongoose.model('Match', likeSchema);
-
+const Chatlog = mongoose.model('Chatlog', chatlogSchema);
 // Register a new user
 router.post('/api/register', async function(req, res) {
   try {
@@ -77,7 +86,7 @@ router.post('/api/login', async function(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-// Route to get random user from database
+// Route to get random user from database (used in Main Page to display profiles)
 router.get('/api/randomUser/:username', async (req, res) => {
   try {
     const currLogInUser = req.params.username;
@@ -96,7 +105,7 @@ router.get('/api/randomUser/:username', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-// Route to handle user likes
+// Route to handle user likes (used in Main Page on like button press)
 router.post('/api/like/:likedUserId/:username', async (req, res) => {
   try {
     const currentUserUsername = req.params.username;
@@ -130,6 +139,11 @@ router.post('/api/like/:likedUserId/:username', async (req, res) => {
     // Check if there is a match
     const reverseLike = await Match.findOne({ user: likedUserId, likedUser: currentUser._id });
     if (reverseLike) {
+      // Create an empty conversation
+      const participants = [currentUser._id, likedUserId];
+      const newConversation = new Chatlog({ participants });
+      await newConversation.save();
+
       return res.status(200).json({ message: 'User liked successfully', match: true });
     }
 
@@ -139,7 +153,7 @@ router.post('/api/like/:likedUserId/:username', async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
-// Route to get user information by username
+// Route to get user information by username (used in Edit Info page to display current profile)
 router.get('/api/userInfo/:username', async (req, res) => {
   try {
     const username = req.params.username;
@@ -155,7 +169,7 @@ router.get('/api/userInfo/:username', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-// Route to handle updating user info
+// Route to handle updating user info (used in Edit Info page onsubmit())
 router.post('/api/updateUserInfo', formidable(), async (req, res) => {
   try {
     // Extract fields from the request
@@ -233,4 +247,97 @@ async function saveImageToStorage(imagePath, originalFileName) {
     throw error; // Rethrow the error to handle it outside
   }
 }
+// Route to get user information by user ID (used in chat view)
+router.get('/api/userInfoById/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return user information including the profile image URL
+    res.status(200).json({ userInfo: user });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Route to fetch available conversations for a user (used in chat view)
+router.get('/api/conversations/:username', async (req, res) => {
+  try {
+    const username = req.params.username;
+    // Fetch user from the database based on the username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    // Fetch conversations for the user from the database
+    const conversations = await Chatlog.find({ participants: user._id });
+    res.status(200).json({ conversations });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Route to create a new conversation (used in chat view)
+router.post('/api/conversations', async (req, res) => {
+  try {
+    const { participants } = req.body;
+    // Create a new conversation in the database
+    const newConversation = new Chatlog({ participants });
+    await newConversation.save();
+    res.status(201).json({ message: 'Conversation created successfully', conversation: newConversation });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Route to send a message in a conversation (used in chat view)
+router.post('/api/conversations/:conversationId/messages', async (req, res) => {
+  try {
+    const conversationId = req.params.conversationId;
+    const { sender, content } = req.body;
+    
+    // Find the conversation by ID
+    const conversation = await Chatlog.findById(conversationId);
+    if (!conversation) {
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+
+    // Retrieve the sender's information from the database
+    const user = await User.findOne({ username: sender });
+    if (!user) {
+      return res.status(404).json({ error: 'Sender not found' });
+    }
+
+    // Add the new message to the conversation along with sender's information
+    conversation.messages.push({ sender: user._id, content });
+    await conversation.save();
+    res.status(201).json({ message: 'Message sent successfully', conversation });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Route to fetch messages for a conversation (used in chat view)
+router.get('/api/conversations/:conversationId/get-messages', async (req, res) => {
+  try {
+    const conversationId = req.params.conversationId;
+    // Find the conversation by ID
+    const conversation = await Chatlog.findById(conversationId);
+    if (!conversation) {
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+    // Retrieve sender information from the database based on sender ID
+    const messagesWithSenders = await Promise.all(conversation.messages.map(async (message) => {
+      const sender = await User.findById(message.sender);
+      return { sender: sender.username, content: message.content };
+    }));
+    res.status(200).json({ messages: messagesWithSenders });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 module.exports = router

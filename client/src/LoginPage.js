@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
-function App() {
+function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -100,4 +100,4 @@ function App() {
   );
 }
 
-export default App;
+export default LoginPage;

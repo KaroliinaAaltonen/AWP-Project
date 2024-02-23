@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './main.css'; // Import your CSS file
 import { jwtDecode } from "jwt-decode";
 
@@ -26,7 +27,18 @@ function Header() {
           <Link className="navbar-brand" to="/main">
             {username ? `Skinder for ${username}` : 'Skinder'}
           </Link>
-          <div className="collapse navbar-collapse justify-content-end">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link className="nav-link" to="/editinfo">Edit Your Info</Link>
