@@ -1,12 +1,15 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const multer = require('multer');
+const fs = require('fs'); // file system module for dealing with the images
+const path = require('path'); // for working with file and directory paths
+const formidable = require('express-formidable'); // express-formidable for handling FormData()
+const router = express.Router(); // app
+const secretKey = 'your-secret-key'; // Define a secret key for JWT
 
-// Define a secret key for JWT
-const secretKey = 'your-secret-key';
+// Serve static files from the 'uploads' directory
+router.use('/api/profileImage', express.static(path.join(__dirname, 'uploads')));
 
 // user-object in the database has a unique name and a password
 const usersSchema = new mongoose.Schema({
@@ -18,68 +21,23 @@ const usersSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', usersSchema);
 
-// Multer storage configuration
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Define the directory where uploaded files will be stored
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); // Keep the original filename
-  }
-});
-
-// Middleware to handle file uploads
-const upload = multer({ storage: storage });
-
-// Middleware to verify JWT token
-const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) return res.status(403).json({ error: 'Token not provided' });
-  
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) return res.status(401).json({ error: 'Failed to authenticate token' });
-    
-    req.user = decoded;
-    next();
-  });
-};
-
-// Route to get user information
-router.get('/api/userInfo', verifyToken, async (req, res) => {
+// Route to get user information by username
+router.get('/api/userInfo/:username', async (req, res) => {
   try {
-    const username = req.user.username;
+    const username = req.params.username;
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.status(200).json({ userInfo: user.userInfo });
+
+    // Return user information including the profile image URL
+    res.status(200).json({ userInfo: user });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// Route to handle file upload
-router.post('/api/uploadImage', verifyToken, upload.single('image'), async (req, res) => {
-  try {
-    const userId = req.user.id; // Assuming you have user ID available after authentication
-    const imagePath = req.file.path;
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Update user profile image path in the database
-    user.profileImage = imagePath;
-    await user.save();
-
-    res.status(200).json({ message: 'Image uploaded successfully' });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 // Register a new user
 router.post('/api/register', async function(req, res) {
@@ -133,50 +91,82 @@ router.post('/api/login', async function(req, res) {
   }
 });
 
-// Update user info
 // Route to handle updating user info
-router.post('/api/updateUserInfo', upload.single('image'), async (req, res) => {
+router.post('/api/updateUserInfo', formidable(), async (req, res) => {
   try {
-    const { userInfo, username } = req.body;
-    const image = req.file;
+    // Extract fields from the request
+    const { userInfo, username } = req.fields;
+    const image = req.files.image;
 
-    // Log received data
-    console.log('User Info:', userInfo);
-    console.log('Username:', username);
-    console.log('Image:', image);
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
 
-    res.status(200).json({ message: 'Data received successfully' });
+    // Update user information
+    user.userInfo = userInfo;
+
+    // Check if an image was uploaded
+    if (image) {
+
+      if (user.profileImage) {
+        // If the user already has an image, delete the old one
+        deleteImageFromStorage(user.profileImage);
+      }
+      // Save the new image to storage using the original filename
+      const newImagePath = await saveImageToStorage(image.path, image.name);
+
+      // Update user's profile image with the new image URL
+      user.profileImage = `/api/profileImage/${image.name}`;
+    }
+
+    // Save the updated user object
+    await user.save();
+
+    res.status(200).json({ message: 'User information updated successfully' });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// Function to save image data to storage (example)
-async function saveImageToStorage(base64ImageData) {
-  // Here you implement the logic to save the base64 image data to your storage system
-  // For example, if using filesystem storage, you might write the data to a file
-  // If using a cloud storage service, you would upload the image data to the service
-  // This function should return the path or URL of the saved image
-  
-  // For demonstration, let's assume we're saving to the filesystem
-  const fs = require('fs');
-  const path = require('path');
-
-  const uploadDir = path.join(__dirname, 'uploads');
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+async function deleteImageFromStorage(imagePath) {
+  try {
+    // Check if the file exists
+    if (fs.existsSync(imagePath)) {
+      // Delete the file
+      fs.unlinkSync(imagePath);
+      console.log(`Deleted ${imagePath}`);
+    } else {
+      console.log(`File not found: ${imagePath}`);
+    }
+  } catch (error) {
+    console.error('Error deleting image:', error);
   }
-
-  // Generate a unique filename
-  const fileName = `${Date.now()}.png`;
-  const filePath = path.join(uploadDir, fileName);
-
-  // Convert base64 data to binary and write to file
-  const imageData = Buffer.from(base64ImageData, 'base64');
-  fs.writeFileSync(filePath, imageData);
-
-  return filePath; // Return the path where the image is saved
 }
 
-module.exports = router;
+async function saveImageToStorage(imagePath, originalFileName) {
+  try {
+    // Define the directory where uploaded files will be stored
+    const uploadDir = path.join(__dirname, 'uploads');
+
+    // Create the directory if it doesn't exist
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+
+    // Construct the path for the uploaded image using the original filename
+    const newImagePath = path.join(uploadDir, originalFileName);
+
+    // Move the image file to the uploads directory with the original filename
+    fs.renameSync(imagePath, newImagePath);
+
+    // Return the path where the image is saved
+    return newImagePath;
+  } catch (error) {
+    console.error('Error saving image:', error);
+    throw error; // Rethrow the error to handle it outside
+  }
+}
+module.exports = router
