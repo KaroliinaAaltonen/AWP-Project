@@ -11,6 +11,8 @@ import EditInfoPage from './EditInfoPage';
 import DisplayChatsPage from './DisplayChatsPage';
 import NotFound from './NotFound';
 import reportWebVitals from './reportWebVitals';
+import AdminPage from './AdminPage';
+import AdminEditInfo from './AdminEditInfo';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -22,6 +24,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/main" element={<MainPage />} />
           <Route path="/editinfo" element={<EditInfoPage />} />
           <Route path="/chats" element={<DisplayChatsPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/edit-user/:username" element={<AdminEditInfo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

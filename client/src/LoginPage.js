@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for n
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 import { useTranslation } from 'react-i18next';
+import { jwtDecode } from "jwt-decode";
 
 function LoginPage() {
   const { t, i18n } = useTranslation(); // Initialize translation hooks
@@ -12,6 +13,16 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState(''); // State variable for error message
   const navigate = useNavigate(); // Using useNavigate hook for navigation
 
+  // Function to extract username from JWT token
+  const usernameFromToken = () => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      console.error('Authentication token not found');
+      return null;
+    }
+    const decodedToken = jwtDecode(authToken);
+    return decodedToken.username;
+  };
   // Function to handle registration
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -19,37 +30,43 @@ function LoginPage() {
   };
 
   // Function to handle login
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    
-    try {
-      // Sending login request to the server
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password })
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to log in'); // Throw error if login fails
-      }
-      
-      // Check if login was successful
-      if (data.message === 'Login successful') {
-        // Store authentication token in local storage
-        localStorage.setItem('authToken', data.token);
-        
-        // Redirect to main page
-        navigate('/main');
-      } else {
-        // Handle other cases, if any
-      }
-    } catch (error) {
-      setErrorMessage(error.message); // Set error message if login fails
+const handleLogin = async (event) => {
+  event.preventDefault();
+  
+  try {
+    // Sending login request to the server
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to log in'); // Throw error if login fails
     }
-  };
+    
+    // Check if login was successful
+    if (data.message === 'Login successful') {
+      // Store authentication token in local storage
+      localStorage.setItem('authToken', data.token);
+      const username = usernameFromToken();
+      const isAdmin = (username === 'Admin');
+      // Check if the user is an admin
+      // Redirect to admin page if user is admin, otherwise redirect to main page
+      if (isAdmin) {
+        navigate('/admin');
+      } else {
+        navigate('/main');
+      }
+    } else {
+      // Handle other cases, if any
+    }
+  } catch (error) {
+    setErrorMessage(error.message); // Set error message if login fails
+  }
+};
 
   // Function to change language
   const changeLanguage = (lng) => {

@@ -23,6 +23,17 @@
     "match alert": "HERRANJESTAS TÄÄHÄN ON MÄTSI",
     "keep scrolling": "Jatka skrollaamista",
     "message them": "Lähetä hänelle viesti",
-    "register new user": "Rekisteröi uusi käyttäjä"
+    "register new user": "Rekisteröi uusi käyttäjä",
+    "admin view": "ADMINNÄKYMÄ",
+    "delete user": "Poista käyttäjä",
+    "edit user": "Muokkaa",
+    "chats": "Keskustelut",
+    "matches": "Mätsit",
+    "user info": "Käyttäjätiedot",
+    "profile image": "Profiilikuva",
+    "save changes": "Tallenna",
+    "back": "Takaisin",
+    "confusion": "Hämmennys",
+    "404 page": "Tämä ei ole etsimäsi sivu..."
   }
   

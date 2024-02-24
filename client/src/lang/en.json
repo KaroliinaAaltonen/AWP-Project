@@ -23,6 +23,17 @@
     "match alert": "OMG THAT IS A MATCH",
     "keep scrolling": "Keep Scrolling",
     "message them": "Message Them",
-    "register new user": "Register a new user"
+    "register new user": "Register a new user",
+    "admin view": "ADMIN VIEW",
+    "delete user": "Delete User",
+    "edit user": "Edit User",
+    "chats": "Chats",
+    "matches": "Matches",
+    "user info": "User Info",
+    "profile image": "Profile Image",
+    "save changes": "Save Changes",
+    "back": "Back",
+    "confusion": "Confusion",
+    "404 page": "This is not the page you are looking for..."
   }
   

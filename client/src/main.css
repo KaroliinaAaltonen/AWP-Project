@@ -48,7 +48,7 @@ width: 800px; /* Adjust the maximum width as needed */
 }
 
 #lang-dropdown {
-  margin-left: 425px;
+  margin-left: 400px;
   margin-bottom: 2px;
   margin-top: 10px;
 }
@@ -318,6 +318,174 @@ word-wrap: break-word; /* Wrap long messages */
 }
 
 /*                     ChatView.js styling                */
+/*                      AdminPage.js styling              */
+.admin-page {
+  margin: 20px;
+}
+
+.profile-list {
+  list-style: none; /* Remove default bullet points */
+  padding: 0;
+}
+
+.profile-item {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #f9f9f9;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+  position: relative; /* Ensure proper positioning */
+}
+
+.profile-item:hover {
+  background-color: #e0e0e0;
+}
+
+.expanded-info {
+  max-height: 400px; /* Set a maximum height for the expanded profile */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  border: 1px solid #ccc; /* Add a border for clarity */
+  padding: 20px; /* Add padding for better readability */
+  padding-bottom: 40px;
+}
+
+.user-info {
+  font-weight: bold; /* Make user info text bold */
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.profile-image {
+  width: 200px; /* Set a fixed width for the profile image */
+  height: auto; /* Maintain aspect ratio */
+  display: inline-block;
+  margin-bottom: 10px; /* Add some spacing below the image */
+}
+
+/* Remove bullets from matches and conversations */
+.expanded-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Position conversations underneath their respective titles */
+.conversation-list {
+  top: 100%; /* Position conversations below the title */
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Set background color for visibility */
+  border: 1px solid #ccc; /* Add border for clarity */
+  padding: 10px;
+  border-radius: 5px; /* Add border radius for style */
+  z-index: 1; /* Ensure conversations appear above other content */
+}
+
+/* Style conversation list items */
+.conversation-list li {
+  cursor: pointer;
+  padding: 5px 0;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.conversation-list li:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.chat-logs {
+  margin-top: 20px; /* Add spacing above the chat logs */
+  padding-left: 0; /* Remove default padding */
+}
+
+.chat-message {
+  list-style: none; /* Remove bullet points */
+  margin-bottom: 5px; /* Add spacing between chat messages */
+}
+
+.admin-delete-user-button {
+  margin-top: 10px;
+  display: inline-block;
+  margin-left: 40px;
+  background-color: red;
+  justify-content: flex-end;
+}
+
+.admin-edit-user-button {
+  margin-top: 10px;
+  display: inline-block;
+  margin-left: 40px;
+  background-color: gray;
+  justify-content: flex-end;
+}
+
+.admin-logout-button {
+  margin-left: 1775px;
+}
+.admin-header{
+  padding: 0.5%;
+}
+/*            AdminPage.js styling       */
+
+/*        AdminEditInfo.js styling       */
+.edit-info-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group-admin-username, .form-group-admin-userinfo,
+.form-group-admin-image {
+  margin-bottom: 20px;
+}
+.form-group-admin-userinfo {
+  margin-bottom: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+input[type="file"] {
+  margin-top: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.image-preview img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.admin-back-button {
+  margin-top: 10px;
+  background-color: grey;
+  max-width: 145px;
+}
+/*        AdminEditInfo.js styling       */
+
 
 /* Media Queries for responsiveness */
 

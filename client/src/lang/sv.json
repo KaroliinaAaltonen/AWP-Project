@@ -23,6 +23,17 @@
     "match alert": "HÄRREGUD DET ÄR EN MATCH",
     "keep scrolling": "Förtsätt scrolla",
     "message them": "Skicka hen en meddelande",
-    "register new user": "Registera en ny änvandare"
+    "register new user": "Registera en ny änvandare",
+    "admin view": "ADMINISTRATÖRSVY",
+    "delete user": "Radera konto",
+    "edit user": "Redigera konto",
+    "chats": "Chattar",
+    "matches": "Matchningar",
+    "user info": "Änvandarinformation",
+    "profile image": "Profilbild",
+    "save changes": "Spara",
+    "back": "Tillbaks",
+    "confusion": "Förvirrande",
+    "404 page": "Det här är inte sidan du letar efter..."
   }
   
