@@ -249,7 +249,16 @@ flex: 1;
 border-right: 1px solid #ccc;
 padding-right: 10px;
 }
-
+.participant-container {
+  display: flex;
+  align-items: center;
+}
+.chat-image{
+  max-width: 100px;
+  max-height: 100px; 
+  border-radius: 50%; /* rounded image */
+  margin-right: 20px; /* I don't want it to touch the username */
+}
 .match {
 cursor: pointer;
 padding: 10px;
@@ -317,6 +326,11 @@ margin-right: 40%;
 word-wrap: break-word; /* Wrap long messages */
 }
 
+.message-timestamp{
+  font-style: italic;
+  font-size: x-small;
+  display: block;
+}
 /*                     ChatView.js styling                */
 /*                      AdminPage.js styling              */
 .admin-page {

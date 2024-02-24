@@ -1,47 +1,41 @@
-// client/src/DisplayChatsPage.js
-import React, { useEffect, useState } from 'react'; // Import features from react
-import Header from './Header'; // Import the Header component
-import ChatView from './ChatView'; // Import the ChatView component
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode for decoding JWT tokens
-import { useTranslation } from 'react-i18next'; // Import translation hook
-
+import React, { useEffect, useState } from 'react';
+import Header from './Header';
+import ChatView from './ChatView';
+import { jwtDecode } from "jwt-decode";
+import { useTranslation } from 'react-i18next';
+import './main.css'
 function DisplayChatsPage() {
-  const { t } = useTranslation(); // Initialize translation hook
-  const [chats, setChats] = useState([]); // State variable for chats
-  const [currentUser, setCurrentUser] = useState(''); // State variable for current user
-  const [selectedChat, setSelectedChat] = useState(null); // State to manage selected chat
+  const { t } = useTranslation();
+  const [chats, setChats] = useState([]);
+  const [currentUser, setCurrentUser] = useState('');
+  const [selectedChat, setSelectedChat] = useState(null);
 
-  // Function to extract username from JWT token
   const usernameFromToken = () => {
-    const authToken = localStorage.getItem('authToken'); // Retrieve authentication token from local storage
+    const authToken = localStorage.getItem('authToken');
     if (!authToken) {
-      console.error('Authentication token not found'); // Log error if authentication token is not found
+      console.error('Authentication token not found');
       return null;
     }
-    const decodedToken = jwtDecode(authToken); // Decode JWT token
-    return decodedToken.username; // Return the username extracted from the token
+    const decodedToken = jwtDecode(authToken);
+    return decodedToken.username;
   };
 
-  // Function to fetch username based on user ID
-  const fetchUsername = async (userId) => {
+  const fetchUserInfoById = async (userId) => {
     try {
-      // Fetch user info based on user ID
       const response = await fetch(`/api/userInfoById/${userId}`);
       const data = await response.json();
-      const username = data.userInfo.username;
-      return username;
+      return data.userInfo;
     } catch (error) {
-      console.error('Error fetching username:', error);
-      return '';
+      console.error('Error fetching user info:', error);
+      return {};
     }
   };
 
   useEffect(() => {
-    // Fetch chats from backend
     const fetchData = async () => {
       try {
-        const username = usernameFromToken(); // Get current user's username from the token
-        setCurrentUser(username); // Set the current user state
+        const username = usernameFromToken();
+        setCurrentUser(username);
         const response = await fetch(`/api/conversations/${username}`, {
           method: 'GET',
           headers: {
@@ -50,30 +44,33 @@ function DisplayChatsPage() {
         });
         const data = await response.json();
         
-        // Fetch usernames for each participant
         const updatedChats = await Promise.all(data.conversations.map(async (chat) => {
           const updatedParticipants = await Promise.all(chat.participants.map(async (participant) => {
-            return await fetchUsername(participant);
+          
+            const userInfo = await fetchUserInfoById(participant);
+            if (userInfo.username !== username){
+              return { id: participant, name: userInfo.username, image: userInfo.profileImage };
+            }
+            return null; // Return null for current user
           }));
-          return { ...chat, participants: updatedParticipants };
+          return { ...chat, participants: updatedParticipants.filter(Boolean) }; // Remove null values
         }));
         
-        setChats(updatedChats); // Update chats state with fetched chats
+        setChats(updatedChats);
       } catch (error) {
         console.error('Error fetching chats:', error);
       }
     };
     fetchData();
-  }, []); // Run this effect once when the component mounts
+  }, []);
 
-  // Function to handle chat selection
   const handleChatSelection = (chatId) => {
     setSelectedChat(prevSelectedChat => (prevSelectedChat === chatId ? null : chatId));
   };
 
   return (
     <div>
-      <Header /> {/* Render the Header component */}
+      <Header />
       <div className="title-container">
         <h2>{t('conversations')}</h2>
         <div className="chat-container">
@@ -81,7 +78,14 @@ function DisplayChatsPage() {
             {chats.length > 0 ? (
               chats.map(chat => (
                 <div key={chat._id} className={`match ${selectedChat === chat._id ? 'selected' : ''}`} onClick={() => handleChatSelection(chat._id)}>
-                  <h3>{chat.participants.filter(participant => participant !== currentUser)}</h3>
+                  {chat.participants.map(participant => (
+                    <div key={participant.id}>
+                      <div className="participant-container">
+                        <img className="chat-image" src={participant.image} alt={participant.name} />
+                        <h3>{participant.name} </h3>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))
             ) : (

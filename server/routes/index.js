@@ -303,8 +303,8 @@ router.post('/api/conversations', async (req, res) => {
 router.post('/api/conversations/:conversationId/messages', async (req, res) => {
   try {
     const conversationId = req.params.conversationId;
-    const { sender, content } = req.body;
-    
+    const { sender, content, timestamp } = req.body; // Extract timestamp from request body
+
     // Find the conversation by ID
     const conversation = await Chatlog.findById(conversationId);
     if (!conversation) {
@@ -318,7 +318,7 @@ router.post('/api/conversations/:conversationId/messages', async (req, res) => {
     }
 
     // Add the new message to the conversation along with sender's information
-    conversation.messages.push({ sender: user._id, content });
+    conversation.messages.push({ sender: user._id, content, timestamp: new Date(timestamp) });
     await conversation.save();
     res.status(201).json({ message: 'Message sent successfully', conversation });
   } catch (error) {
@@ -338,7 +338,7 @@ router.get('/api/conversations/:conversationId/get-messages', async (req, res) =
     // Retrieve sender information from the database based on sender ID
     const messagesWithSenders = await Promise.all(conversation.messages.map(async (message) => {
       const sender = await User.findById(message.sender);
-      return { sender: sender.username, content: message.content };
+      return { sender: sender.username, content: message.content, timestamp: message.timestamp };
     }));
     res.status(200).json({ messages: messagesWithSenders });
   } catch (error) {

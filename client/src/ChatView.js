@@ -1,74 +1,66 @@
-// client/src/ChatView.js
-import React, { useEffect, useState, useRef } from 'react'; // Import features from react
-import { Button, Form } from 'react-bootstrap'; // Import bootstrap features
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for decoding JWT tokens
-import './main.css'; // Import the CSS file
+import React, { useEffect, useState, useRef } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { jwtDecode } from 'jwt-decode';
+import './main.css';
 import { useTranslation } from 'react-i18next';
 
 function ChatView({ chatId, isOpen, sender }) {
-  const { t } = useTranslation(); // Initialize translation hook
-  const [messages, setMessages] = useState([]); // State variable for messages
-  const [newMessage, setNewMessage] = useState(''); // State variable for new message
-  const chatViewRef = useRef(null); // Reference to the chat view container
+  const { t } = useTranslation();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const chatViewRef = useRef(null);
 
-  // Function to extract username from JWT token
   const usernameFromToken = () => {
-    const authToken = localStorage.getItem('authToken'); // Retrieve authentication token from local storage
+    const authToken = localStorage.getItem('authToken');
     if (!authToken) {
-      console.error('Authentication token not found'); // Log error if authentication token is not found
+      console.error('Authentication token not found');
       return null;
     }
-    const decodedToken = jwtDecode(authToken); // Decode JWT token
-    return decodedToken.username; // Return the username extracted from the token
+    const decodedToken = jwtDecode(authToken);
+    return decodedToken.username;
   };
 
-  // Function to handle sending a new message
   const sendMessage = async () => {
     try {
-      // Get sender's username from the token
-      const sender = usernameFromToken(); 
-      // Send the new message to the backend with the sender's username
+      const sender = usernameFromToken();
+      const timestamp = new Date().toISOString(); // Get the current timestamp in ISO 8601 format
       const response = await fetch(`/api/conversations/${chatId}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ sender, content: newMessage }) // Send the sender's username along with the content of the new message
+        body: JSON.stringify({ sender, content: newMessage, timestamp }) // Include the timestamp
       });
-
+  
       if (response.ok) {
-        // Fetch updated messages after sending the new message
         fetchMessages();
-        // Clear the text input field after sending the message
         setNewMessage('');
       } else {
-        console.error('Error sending message:', response.statusText); // Log error if message sending fails
+        console.error('Error sending message:', response.statusText);
       }
     } catch (error) {
-      console.error('Error sending message:', error); // Log error if message sending fails
+      console.error('Error sending message:', error);
     }
   };
 
-  // Function to fetch messages for the selected chat
   const fetchMessages = async () => {
     try {
       const response = await fetch(`/api/conversations/${chatId}/get-messages`);
       if (response.ok) {
         const data = await response.json();
-        setMessages(data.messages); // Update messages state with fetched messages
-        // Scroll to the bottom of the chat view after updating messages
+        console.log(data); // Log the data to check the structure and timestamp format
+        setMessages(data.messages);
         if (chatViewRef.current) {
           chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight;
         }
       } else {
-        console.error('Error fetching messages:', response.statusText); // Log error if fetching messages fails
+        console.error('Error fetching messages:', response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching messages:', error); // Log error if fetching messages fails
+      console.error('Error fetching messages:', error);
     }
   };
 
-  // Effect to fetch messages when the chat view is opened or chatId changes
   useEffect(() => {
     if (isOpen) {
       fetchMessages();
@@ -78,19 +70,21 @@ function ChatView({ chatId, isOpen, sender }) {
   return (
     <div className={`chatview-chat-container ${isOpen ? 'open' : 'closed'}`}>
       <div className="chatview-chat-view" ref={chatViewRef}>
-        {messages.length === 0 ? (
-          <p className="empty-chat">{t('crickets')}</p>
-        ) : (
-          <ul>
-            {messages.map(message => (
-              <li key={message._id} className={message.sender === sender ? 'user-message' : 'other-message'}>
-                <strong>{message.sender}: </strong>{message.content}
-              </li>
-            ))}
-          </ul>
-        )}
+      {messages.length === 0 ? (
+        <p className="empty-chat">{t('crickets')}</p>
+      ) : (
+        <ul>
+          {messages.map(message => (
+          <li key={message._id} className={message.sender === sender ? 'user-message' : 'other-message'}>
+            <div className="message-content">
+              <span className="message-text">{message.content}</span>
+              <span className="message-timestamp">{new Date(message.timestamp).toLocaleString()}</span> {/* Display timestamp */}
+            </div>
+          </li>
+        ))}
+        </ul>
+      )}
       </div>
-      {/* Form for sending a new message */}
       <Form onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
         <Form.Group controlId="formNewMessage" className="chatview-form-group">
           <Form.Control 
