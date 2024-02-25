@@ -1,0 +1,408 @@
+[{
+  "_id": {
+    "$oid": "65da2418db7f2ef799a9e57d"
+  },
+  "participants": [
+    {
+      "$oid": "65d89f9a5709548b19f67559"
+    },
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d89f9a5709548b19f67559"
+      },
+      "content": "Today's video is sponsored by Raid Shadow Legends, one of the biggest mobile role-playing games of 2019 and it's totally free! Currently almost 10 million users have joined Raid over the last six months, and it's one of the most impressive games in its class with detailed models, environments and smooth 60 frames per second animations! All the champions in the game can be customized with unique gear that changes your strategic buffs and abilities! The dungeon bosses have some ridiculous skills of their own and figuring out the perfect party and strategy to overtake them's a lot of fun! Currently with over 300,000 reviews, Raid has almost a perfect score on the Play Store! The community is growing fast and the highly anticipated new faction wars feature is now live, you might even find my squad out there in the arena! It's easier to start now than ever with rates program for new players you get a new daily login reward for the first 90 days that you play in the game! So what are you waiting for? Go to the video description, click on the special links and you'll get 50,000 silver and a free epic champion as part of the new player program to start your journey! Good luck and I'll see you there!",
+      "_id": {
+        "$oid": "65da2445db7f2ef799a9e58d"
+      },
+      "timestamp": {
+        "$date": "2024-02-24T17:15:49.857Z"
+      }
+    },
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "The missile knows where it is at all times. It knows this because it knows where it isn't. By subtracting where it is from where it isn't, or where it isn't from where it is (whichever is greater), it obtains a difference, or deviation. The guidance subsystem uses deviations to generate corrective commands to drive the missile from a position where it is to a position where it isn't, and arriving at a position where it wasn't, it now is. Consequently, the position where it is, is now the position that it wasn't, and it follows that the position that it was, is now the position that it isn't. In the event that the position that it is in is not the position that it wasn't, the system has acquired a variation, the variation being the difference between where the missile is, and where it wasn't. If variation is considered to be a significant factor, it too may be corrected by the GEA. However, the missile must also know where it was. The missile guidance computer scenario works as follows. Because a variation has modified some of the information the missile has obtained, it is not sure just where it is. However, it is sure where it isn't, within reason, and it knows where it was. It now subtracts where it should be from where it wasn't, or vice-versa, and by differentiating this from the algebraic sum of where it shouldn't be, and where it was, it is able to obtain the deviation and its variation, which is called error.",
+      "_id": {
+        "$oid": "65da2479db7f2ef799a9e5a8"
+      },
+      "timestamp": {
+        "$date": "2024-02-24T17:16:41.639Z"
+      }
+    },
+    {
+      "sender": {
+        "$oid": "65d89f9a5709548b19f67559"
+      },
+      "content": "Oispa aikaleima",
+      "_id": {
+        "$oid": "65da4f7451390974249c78f1"
+      },
+      "timestamp": {
+        "$date": "2024-02-24T20:20:04.335Z"
+      }
+    },
+    {
+      "sender": {
+        "$oid": "65d89f9a5709548b19f67559"
+      },
+      "content": "Invalid date nice",
+      "timestamp": {
+        "$date": "2024-02-24T20:23:49.073Z"
+      },
+      "_id": {
+        "$oid": "65da50551b8f99a81c26d7a8"
+      }
+    },
+    {
+      "sender": {
+        "$oid": "65d89f9a5709548b19f67559"
+      },
+      "content": "Niin hauskaa ",
+      "timestamp": {
+        "$date": "2024-02-24T20:29:36.550Z"
+      },
+      "_id": {
+        "$oid": "65da51b02ebf299d550f9a1c"
+      }
+    },
+    {
+      "sender": {
+        "$oid": "65d89f9a5709548b19f67559"
+      },
+      "content": "Miks tossa näkyy käyttäjänimiki nyt",
+      "timestamp": {
+        "$date": "2024-02-24T20:30:39.601Z"
+      },
+      "_id": {
+        "$oid": "65da51ef076e87d53d73e240"
+      }
+    },
+    {
+      "sender": {
+        "$oid": "65d89f9a5709548b19f67559"
+      },
+      "content": "Mä oon niin hyvä koodaamaan ku backend ei ees palauta aikaleimaa",
+      "timestamp": {
+        "$date": "2024-02-24T20:35:42.336Z"
+      },
+      "_id": {
+        "$oid": "65da531ee70bcfd45af76919"
+      }
+    }
+  ],
+  "__v": 7
+},
+{
+  "_id": {
+    "$oid": "65da24dedb7f2ef799a9e5d1"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a10c5709548b19f67585"
+    },
+    {
+      "$oid": "65da24b6db7f2ef799a9e5b5"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a10c5709548b19f67585"
+      },
+      "content": "Tälläkin hetkellä otan yhteyttä salaiseen vakoojaverkkooni ympäri Suomen ja IP-osoitettasi jäljitetään parasta aikaa. Nimissäni on yli 300 varmistettua tappoa. Olen koulutettu gorillasodankäyntiin ja olen koko Suomen armeijan paras tarkkuuskiväärimies.",
+      "_id": {
+        "$oid": "65da2527db7f2ef799a9e5e1"
+      },
+      "timestamp": {
+        "$date": "2024-02-24T17:19:35.465Z"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da692d5a524864489080f0"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65d8a0325709548b19f6756b"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "Situations like this are why I use Audible. Audible is a subscription service that allows you to buy audiobooks that you can listen to on your phone. Audible allows you to choose from a gigantic array of audiobooks narrated by amazing narrators, that you can listen to from anywhere! Right now I'm listening to The Dead Zone by Stephen King, narrated by Oscar winning actor James Franco. It's the chilling story of a highschool teacher who falls into a coma and wakes up with psychic abilities. In all seriousness, audibooks are great for when you're alone, and I should maybe stop with the YouTube",
+      "timestamp": {
+        "$date": "2024-02-24T22:12:28.924Z"
+      },
+      "_id": {
+        "$oid": "65da69cd5a52486448908114"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da69d35a52486448908131"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65d8a1355709548b19f67590"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "Honey is a free browser add-on available on Google, Oprah, Firefox, Safari, if it's a browser it has Honey. All you have to do is when you're checking out on one of these major sites, just click that little orange button, and it will scan the entire internet and find discount codes for you. As you see right here, I'm on Hanes, y'know, ordering some shirts because who doesn't like ordering shirts; We saved 11 dollars! Dude our total is 55 dollars, and after Honey, it's 44 dollars. Boom. I clicked once and I saved 11 dollars. There's literally no reason not to install Honey. It takes two clicks, 10 million people use it, 100,000 five star reviews, unless you hate money, you should install Honey.",
+      "timestamp": {
+        "$date": "2024-02-24T22:12:47.577Z"
+      },
+      "_id": {
+        "$oid": "65da69df5a52486448908159"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da69e35a52486448908165"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65da59f8d40320850387fe1c"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "Aloitin Sveitsin valtaamisen juuri ennen heidän kansallispäiväänsä. Valitsin Saksan, mutta totta puhuen se harmittaa hieman, kaasu alkaa loppua eikä ole edes vielä talvi. En onnistunut valtaamaan yhtään Sveitsin provinsseista, ja nyt minun kimppuun hyökätään. Liittoudun Ranskan kanssa, ehkä he voivat auttaa. Ehei nyt heidänkin kimppuunsa käydään. Mistä he saivat niin paljon aseita ja tankkeja? Aivan. Nyt ymmärrän",
+      "timestamp": {
+        "$date": "2024-02-24T22:13:07.222Z"
+      },
+      "_id": {
+        "$oid": "65da69f35a52486448908193"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da69f95a5248644890819f"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65da67bf5a52486448908062"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "With their abilities Water Absorb and Hydration, they can easily recover from fatigue with enough water. No other Pokémon comes close to this level of compatibility.",
+      "timestamp": {
+        "$date": "2024-02-24T22:14:10.888Z"
+      },
+      "_id": {
+        "$oid": "65da6a335a524864489081d4"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da6a3b5a524864489081e1"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65da598170cfb27fc3ee54dd"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "Tälläkin hetkellä otan yhteyttä salaiseen vakoojaverkkooni ympäri Suomen ja IP-osoitettasi jäljitetään parasta aikaa. Nimissäni on yli 300 varmistettua tappoa. Olen koulutettu gorillasodankäyntiin ja olen koko Suomen armeijan paras tarkkuuskiväärimies.",
+      "timestamp": {
+        "$date": "2024-02-24T22:14:40.297Z"
+      },
+      "_id": {
+        "$oid": "65da6a505a5248644890821b"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da6a605a52486448908260"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65d8a10c5709548b19f67585"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "Lets suppose that you're writing a really important email to a colleague. Or a post on Facebook that all your friends will see! Or a paper for your english class that you just have to get an A on. Or a résumé for your dream job. Or a message to your crush on a dating site. The point is that you write important things each and every day, and whether you're an english professor or an english learner, we all could use a second pair of eyes to help us make sure we're always putting our best foot forward. Enter Grammarly, a writing app developed by some of our top linguists. Grammarly helps you find and fix grammar, spelling, and punctuation errors wherever you write, errors that other spelling and grammar checkers just cant catch. Grammarly also helps you improve word choice and style, making your writing clear and compelling all the time. Best of all, its free. Better writing, better results. Click on the button to download Grammarly now.",
+      "timestamp": {
+        "$date": "2024-02-24T22:15:14.144Z"
+      },
+      "_id": {
+        "$oid": "65da6a725a524864489082a0"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da6a965a524864489082b0"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65da689c5a524864489080c5"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "ja täällä ei käyttäydy kukaan muu epäasiallisesti ku minä",
+      "timestamp": {
+        "$date": "2024-02-24T22:16:52.743Z"
+      },
+      "_id": {
+        "$oid": "65da6ad55a524864489082f6"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da6af05a52486448908307"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65da67865a52486448908056"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "Joku salkkariläppä emt",
+      "timestamp": {
+        "$date": "2024-02-24T22:17:37.416Z"
+      },
+      "_id": {
+        "$oid": "65da6b015a52486448908353"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da6b555a524864489083a3"
+  },
+  "participants": [
+    {
+      "$oid": "65da24b6db7f2ef799a9e5b5"
+    },
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65da24b6db7f2ef799a9e5b5"
+      },
+      "content": "Kuinka vaikeeta voi olla RNG:ttää yksi Shrekki et sais tän featuren testattua",
+      "timestamp": {
+        "$date": "2024-02-24T22:19:22.443Z"
+      },
+      "_id": {
+        "$oid": "65da6b6a5a524864489083b9"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65da6d075a524864489084ca"
+  },
+  "participants": [
+    {
+      "$oid": "65d8a1765709548b19f6759b"
+    },
+    {
+      "$oid": "65da6c775a524864489084a6"
+    }
+  ],
+  "messages": [
+    {
+      "sender": {
+        "$oid": "65d8a1765709548b19f6759b"
+      },
+      "content": "senkin vihaaja lusikka on superior aterin",
+      "timestamp": {
+        "$date": "2024-02-24T22:26:48.946Z"
+      },
+      "_id": {
+        "$oid": "65da6d285a52486448908523"
+      }
+    }
+  ],
+  "__v": 1
+}]
