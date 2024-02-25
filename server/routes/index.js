@@ -17,7 +17,8 @@ const usersSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: { type: String },
   profileImage: { type: String },
-  userInfo: { type: String }
+  userInfo: { type: String },
+  createdAt: { type: Date, default: Date.now }
 });
 // MongoDB schema for user likes (matches)
 const likeSchema = new mongoose.Schema({
@@ -52,7 +53,7 @@ router.post('/api/register', async function(req, res) {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user with hashed password
+    // Create a new user with hashed password and set createdAt timestamp
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
@@ -96,13 +97,24 @@ router.post('/api/login', async function(req, res) {
 router.get('/api/randomUser/:username', async (req, res) => {
   try {
     const currLogInUser = req.params.username;
-    // Fetch a random user excluding the currently logged-in user
+
+    // Find the current user document
+    const currentUser = await User.findOne({ username: currLogInUser });
+
+    // Fetch all liked users' IDs of the current user from the Match model
+    let likedUserIds = await Match.find({ user: currentUser._id }).distinct('likedUser');
+
+    // Ensure likedUserIds is an array
+    likedUserIds = likedUserIds || [];
+
+    // Fetch a random user excluding the currently logged-in user and those already liked
     const user = await User.aggregate([
-      { $match: { username: { $ne: currLogInUser } } }, // Exclude current user
+      { $match: { _id: { $nin: [...likedUserIds, currentUser._id] } } }, // Exclude liked users and current user
       { $sample: { size: 1 } } // Get a random user
     ]);
-    if (!user || user.length === 0) {
-      return res.status(404).json({ error: 'Random user not found' });
+    if (!user || user.length === 1) { // 1 because there is the current user and admin in the database
+      // Check if there are no unliked users
+      return res.status(404).json({ message: 'rest' });
     }
     // Return user information including the profile image URL
     res.status(200).json({ userInfo: user[0] });

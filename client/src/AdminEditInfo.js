@@ -88,13 +88,15 @@ const AdminEditInfo = () => {
   };
 
   return (
-    <div className="edit-info-page">
+    <div className="admin-edit-info-page">
+      {/*The view is similar to the user's version of edit info page (defined in EditInfoPage.js)*/}
       <h1>{t('edit info')}</h1>
       {userInfo.profileImage && (
           <div className="profile-image">
             <img src={userInfo.profileImage} alt="Profile Image" />
           </div>
         )}
+        {/* Form for submitting new information and image*/}
       <form onSubmit={handleSubmit}>
         <div className="form-group-admin-username">
           <label>{t('username')}:</label>
@@ -108,11 +110,13 @@ const AdminEditInfo = () => {
           <label>{t('profile image')}:</label>
           <input type="file" name="profileImage" onChange={handleImageUpload} accept="image/*" />
         </div>
+        {/* Previewing the selected image*/}
         {imagePreview && (
           <div className="image-preview">
             <img src={imagePreview} alt="Image Preview" />
           </div>
         )}
+        {/* Save button */}
         <button type="submit">{t('save changes')}</button>
       </form>
       <button class="admin-back-button" onClick={handleBack}>{t('back')}</button> {/* Back button */}

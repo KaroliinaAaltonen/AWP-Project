@@ -43,7 +43,7 @@ function EditInfoPage() {
 
   const handleReset = () => {
     // Reset the form
-    document.getElementById("image-form").reset();
+    document.getElementById("ei-image-form").reset();
     // Reset the state variables
     setUserInfo('');
     setImage(null);
@@ -96,6 +96,7 @@ function EditInfoPage() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
+        // get authenticated user's userinfo
         const username = usernameFromToken();
         if (!username) return;
 
@@ -125,13 +126,16 @@ function EditInfoPage() {
 
   return (
     <div className="edit-info-page">
-      <Header /> {/* Render the Header component */}
+      <div className="header">
+        <Header />
+      </div>
+      {/* Display the current profile */}
       {existingUserInfo && (
-        <div className="existing-user-info">
+        <div className="ei-existing-user-info">
           <h3>{t('edit info')}</h3>
           <p>{t('username')}: {existingUserInfo.username}</p>
           <p>{t('information')}: {existingUserInfo.userInfo}</p>
-          <div className="profile-image">
+          <div className="ei-profile-image">
             {existingUserInfo.profileImage ? (
               <img src={existingUserInfo.profileImage} alt="Profile Image" />
             ) : (
@@ -140,23 +144,24 @@ function EditInfoPage() {
           </div>
         </div>
       )}
-      <form id="image-form" onSubmit={handleSubmit} onReset={handleReset}>
+      {/* Form to submit new information */}
+      <form id="ei-image-form" onSubmit={handleSubmit} onReset={handleReset}>
         {imagePreview && (
-          <div className="image-preview">
+          <div className="ei-image-preview">
             <img src={imagePreview} alt="Selected Image" />
           </div>
         )}
-        <div className="form-group" id="info-text-field">
-          <label htmlFor="userInfo">{t('new info')}:</label>
-          <textarea id="userInfo" className="form-control" name="userInfo" value={userInfo} onChange={handleUserInfoChange} maxLength={150} />
+        <div className="ei-form-group" id="ei-info-text-field">
+          <label htmlFor="ei-userInfo">{t('new info')}:</label>
+          <textarea id="ei-userInfo" className="ei-form-control" name="userInfo" value={userInfo} onChange={handleUserInfoChange} maxLength={350} />
         </div>
-        <div className="form-group" id="upload-image-div">
-          <label htmlFor="image" id="upload-image-label">{t('upload image')}</label>
-          <input type="file" id="image" className="form-control-file" name="image" accept="image/*" onChange={handleImageUpload} />
+        <div className="ei-form-group" id="ei-upload-image-div">
+          <label htmlFor="ei-image" id="ei-upload-image-label">{t('upload image')}</label>
+          <input type="file" id="ei-image" className="ei-form-control-file" name="ei-image" accept="image/*" onChange={handleImageUpload} />
         </div>
-        <div className="button-group">
-          <button type="submit" className="btn btn-primary" id="edit-info-save-button">{t('save')}</button>
-          <button type="button" className="btn btn-secondary" id="cancel-button" onClick={handleReset}>{t('cancel')}</button>
+        <div className="ei-button-group">
+          <button type="submit" className="btn btn-primary" id="ei-save-button">{t('save')}</button>
+          <button type="button" className="btn btn-secondary" id="ei-cancel-button" onClick={handleReset}>{t('cancel')}</button>
         </div>
       </form>
     </div>

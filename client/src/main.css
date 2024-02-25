@@ -79,48 +79,53 @@ margin: 2%; /* I don't want the button to touch the password field */
 
 /*                           MainPage.js styling                              */
 
-.user-container {
+.main-user-container {
 display: flex;
 justify-content: center;
 align-items: center;
 height: 100vh;
 }
 
-.user-card {
+.main-user-card {
 border: 1px solid #ccc;
 border-radius: 10px;
 padding: 20px;
 text-align: center;
 }
 
-.user-image {
+.main-user-image {
 width: 300px; /* Increased width */
 height: 300px; /* Increased height */
 border-radius: 50%; /* Rounded corners for the image */
 margin-bottom: 20px; /* Increased margin */
 }
 
-.user-name {
-margin-bottom: 10px;
+.main-user-name {
+  margin-bottom: 10px;
+  font-weight: bold; /* Make the name bold */
+  color: black; /* Set the color to black */
+  display: block;
+  text-decoration: none;
+  font-size:xx-large;
 }
 
-.user-info {
+.main-user-info {
 margin-bottom: 20px;
 }
 
-.button-group button {
+.main-button-group button {
 margin: 0 5px;
 padding: 10px 20px;
 border-radius: 5px;
 cursor: pointer;
 }
 
-.like-button {
+.main-like-button {
 background-color: green;
 color: white;
 }
 
-.dislike-button {
+.main-dislike-button {
 background-color: red;
 color: white;
 }
@@ -159,178 +164,253 @@ border-radius: 10px;
 text-align: center;
 }
 
-.button-group {
+.main-button-group {
 margin-top: 20px;
 }
 
-.button-group button {
+.match-button-group button {
 margin: 0 10px;
 }
+.exhausted-skinder-container {
+  text-align: center; /* Center align the content */
+}
+
+.exhausted-skinder-text {
+  margin-bottom: 10px; /* Add margin at the bottom to create space between text and image */
+}
+.thanos{
+  display: block;
+}
 /*                           MainPage.js styling                              */
+/*                           ViewProfilePage.js styling                       */
+.view-profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.view-profile-image img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.view-profile-details {
+  text-align: center;
+}
+
+.view-profile-details h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.view-profile-details p {
+  font-size: 18px;
+}
+/*                           ViewProfilePage.js styling                       */
 /*                          EditInfoPage.js styling                           */
-.existing-user-info{
+.ei-existing-user-info{
 margin-left: 0.5%;
 margin-top: 10px;
 }
 
-.profile-image {
+.ei-profile-image {
 width: 300px; /* Adjust the size as needed */
 height: 300px; /* Adjust the size as needed */
 border-radius: 50%; /* Makes the image circular */
 overflow: hidden; /* Ensures the image stays within the circular shape */
 }
 
-.profile-image img {
+.ei-profile-image img {
 width: 100%; /* Ensures the image takes up the entire space of its parent */
 height: 100%; /* Allows the image to maintain its aspect ratio */
 object-fit: cover; /* Ensures the image covers the entire container */
 }
 
-.image-preview {
+.ei-image-preview {
 margin-bottom: 20px; /* Add some space below the image */
 margin-top: 20px;
 margin-left: 20px;
 }
 
-.image-preview img {
+.ei-image-preview img {
 max-width: 100%; /* Ensure the image doesn't exceed its container width */
 max-height: 300px; /* Limit the maximum height of the image */
 margin: 0 auto; /* Center the image horizontally */
 }
 
-.edit-info-page {
+.ei-edit-info-page {
   display: flex;
   flex-direction: column;
   align-items: left; /* Align items vertically */
   justify-content: flex-start; /* Align items from the top */
   height: 100vh; /* Set height to 100% of the viewport height */
 }
-.form-group{
+.ei-form-group{
   margin-top: 20px;
   padding: 0.5%;
 }
 
-.form-group#info-text-field {
+.ei-form-group#ei-info-text-field {
   display: inline-block;
   width: 900px;
   overflow: auto;
 }
 
-.form-group#info-text-field textarea {
+.ei-form-group#ei-info-text-field textarea {
   height: auto; /* Set height to auto */
   min-height: 50px; /* Set a minimum height */
   resize: none; /* Disable resizing */
 }
-#upload-image-div {
+#ei-upload-image-div {
   display: flex;
   flex-direction: column;
 }
 
-#upload-image-label {
+#ei-upload-image-label {
   margin-bottom: 5px; /* Add some space between label and input */
 }
 
-#edit-info-save-button, #cancel-button {
+#ei-save-button, #ei-cancel-button {
   margin-top: 2%;
   margin-left: 0.5%;
+  margin-left: 5px;
 }
 /*                 EditInfoPage.js styling                */
 /*                 DisplayChatsPage.js styling            */
-.title-container{
-margin-top: 20px;
-margin-left: 20px;
+.title-container {
+  margin-top: 20px;
+  margin-left: 20px;
+  position: relative;
+}
+.search-bar {
+  position: absolute; /*absolute positioning makes it not affect other stuff. goodbye 2 hours of my life */
+  top: 0;
+  left: 0;
+  width: 20%;
+  z-index: 2; /* Ensure the search bar is above other content */
+}
+.pager-container {
+  position: fixed; /* Fix the pager at the bottom */
+  bottom: 0;
+  left: 3.5%; /* Push the container to the center */
+  transform: translateX(-50%); /* Center the container horizontally */
+  background-color: transparent;
+  z-index: 1;
+  padding: 10px; /* Add padding to the left and right sides */
+  justify-content: space-between; /* Space the pager elements evenly */
+}
+.pagination-button {
+  background-color: lightblue;
+}
+
+.pagination-button.active {
+  /* Add styles for the active button */
+  background-color: #007bff; /* Example background color for active button */
+  color: white; /* Example text color for active button */
+  /* Add any additional styles to differentiate the active button */
 }
 .chat-container {
-display: flex;
+  display: flex;
+  position: relative; /* Add relative positioning */
 }
 
 .matches-list {
-flex: 1;
-border-right: 1px solid #ccc;
-padding-right: 10px;
+  flex: 1;
+  border-right: 1px solid #ccc;
+  overflow-y: auto; /* Make the list scrollable */
+  max-height: calc(100vh - 200px); /* Adjust height as needed */
+  padding-bottom: 20px; /* Add padding to the bottom */
 }
+
 .participant-container {
   display: flex;
   align-items: center;
 }
-.chat-image{
+
+.chat-image {
   max-width: 100px;
-  max-height: 100px; 
-  border-radius: 50%; /* rounded image */
-  margin-right: 20px; /* I don't want it to touch the username */
+  max-height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
 }
+
 .match {
-cursor: pointer;
-padding: 10px;
-border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
 .match:hover {
-background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .selected {
-background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 .chat-view {
-flex: 2;
-padding: 10px;
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto; /* Make the chat view scrollable */
 }
 /*                 DisplayChatsPage.js styling            */
+
 /*                     ChatView.js styling                */
 .chatview-chat-container {
-display: flex;
-flex-direction: column;
-height: 83vh; /* Set the height to not occupy the entire viewport or otherwise it needs to be scrolled down to */
-}
-
-.chatview-chat-view {
-flex: 1; /* Allow the chat view to occupy remaining vertical space */
-overflow-y: auto; /* Enable vertical scrolling if needed */
-}
-
-.chatview-chat-view ul {
-list-style-type: none; /* Remove bullet points from the list */
-padding: 0;
-}
-
-.chatview-form-group {
-display: flex;
-margin-bottom: 0; /* Remove the default margin to align with the input field */
-}
-
-.chatview-form-control {
-flex: 1; /* Allow the input field to grow to occupy remaining horizontal space */
-margin-right: 10px; /* Add some space between the input field and the button */
-}
-
-.chatview-send-button {
-align-self: flex-end; /* Align the button to the most right side of the input field */
-}
-.user-message {
-background-color: #ffc0cb; /* Light pink background for messages sent by the user */
-border-radius: 10px;
-padding: 8px 12px;
-margin-bottom: 5px;
-margin-left: 40%;
-word-wrap: break-word; /* Wrap long messages */
-}
-
-.other-message {
-background-color: #e5e5e5; /* Light gray background for messages sent by others */
-border-radius: 10px;
-padding: 8px 12px;
-margin-bottom: 5px;
-margin-right: 40%;
-word-wrap: break-word; /* Wrap long messages */
-}
-
-.message-timestamp{
-  font-style: italic;
-  font-size: x-small;
-  display: block;
-}
+  display: flex;
+  flex-direction: column;
+  height: 83vh; /* Set the height to not occupy the entire viewport or otherwise it needs to be scrolled down to */
+  }
+  
+  .chatview-chat-view {
+  flex: 1; /* Allow the chat view to occupy remaining vertical space */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  }
+  
+  .chatview-chat-view ul {
+  list-style-type: none; /* Remove bullet points from the list */
+  padding: 0;
+  }
+  
+  .chatview-form-group {
+  display: flex;
+  margin-bottom: 0; /* Remove the default margin to align with the input field */
+  }
+  
+  .chatview-form-control {
+  flex: 1; /* Allow the input field to grow to occupy remaining horizontal space */
+  margin-right: 10px; /* Add some space between the input field and the button */
+  }
+  
+  .chatview-send-button {
+  align-self: flex-end; /* Align the button to the most right side of the input field */
+  }
+  .user-message {
+  background-color: #ffc0cb; /* Light pink background for messages sent by the user */
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  margin-left: 40%;
+  word-wrap: break-word; /* Wrap long messages */
+  }
+  
+  .other-message {
+  background-color: #e5e5e5; /* Light gray background for messages sent by others */
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  margin-right: 40%;
+  word-wrap: break-word; /* Wrap long messages */
+  }
+  
+  .message-timestamp{
+    font-style: italic;
+    font-size: x-small;
+    display: block;
+  }
 /*                     ChatView.js styling                */
 /*                      AdminPage.js styling              */
 .admin-page {
@@ -442,7 +522,7 @@ word-wrap: break-word; /* Wrap long messages */
 /*            AdminPage.js styling       */
 
 /*        AdminEditInfo.js styling       */
-.edit-info-page {
+.admin-edit-info-page {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -500,6 +580,18 @@ button:hover {
 }
 /*        AdminEditInfo.js styling       */
 
+/*       NotFound.js styling             */
+/* CSS */
+.nfcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.nferror-message {
+  text-align: center;
+}
 
 /* Media Queries for responsiveness */
 

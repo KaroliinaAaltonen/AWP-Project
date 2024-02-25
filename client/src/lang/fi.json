@@ -7,6 +7,7 @@
     "display chats": "Näytä Keskustelut",
     "log out": "Kirjaudu Ulos",
     "language": "kieli",
+    "confirm password": "Vahvista salasana",
     "skinder for": "SKINDERISI",
     "information": "tiedot",
     "new info": "Syötä vapaa kuvaus itsestäsi",
@@ -34,6 +35,11 @@
     "save changes": "Tallenna",
     "back": "Takaisin",
     "confusion": "Hämmennys",
-    "404 page": "Tämä ei ole etsimäsi sivu..."
+    "404 page": "Tämä ei ole etsimäsi sivu...",
+    "user not found": "haettua käyttäjää ei löytynyt",
+    "loading": "Ladataan...",
+    "confrim delete": "Haluatko varmasti poistaa käyttäjän?",
+    "delete error": "Käyttäjää poistaessa tapahtui virhe.",
+    "NB": "Olet kuluttanut loppuun koko Skinderin"
   }
   

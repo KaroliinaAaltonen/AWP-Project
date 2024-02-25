@@ -7,6 +7,7 @@
     "display chats": "Visa Chattar",
     "log out": "Logga Ut",
     "language": "Språk",
+    "confirm password": "Bekräfta lösenord",
     "skinder for": "SKINDER för",
     "information": "information",
     "new info": "Ange ny fri personlig beskrivning",
@@ -34,6 +35,11 @@
     "save changes": "Spara",
     "back": "Tillbaks",
     "confusion": "Förvirrande",
-    "404 page": "Det här är inte sidan du letar efter..."
+    "404 page": "Det här är inte sidan du letar efter...",
+    "user not found": "änvandaren gick inte att hittas",
+    "loading": "Laddar...",
+    "confrim delete": "Bekräfta radering",
+    "delete error": "Nånting gick fel med radering av kontot",
+    "NB": "Du har uttmattat hela Skinder"
   }
   

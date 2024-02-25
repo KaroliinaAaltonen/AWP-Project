@@ -1,9 +1,10 @@
-// client/src/MainPage.js
 import React, { useEffect, useState, useCallback } from 'react';
 import Header from './Header';
 import { jwtDecode } from "jwt-decode";
 import './main.css';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import rest from './images/rest.jpg';
 
 function MainPage() {
   const { t } = useTranslation(); // i18n
@@ -11,6 +12,7 @@ function MainPage() {
   const [randomUser, setRandomUser] = useState(null);
   const [showMatchText, setShowMatchText] = useState(false);
   const [matchUsers, setMatchUsers] = useState({});
+  const [exhaustedSkinder, setExhaustedSkinder] = useState(false); // State for indicating if Skinder is exhausted
 
   // Function to extract username from JWT token
   const usernameFromToken = () => {
@@ -44,6 +46,11 @@ function MainPage() {
     try {
       const response = await fetch(`/api/randomUser/${username}`);
       const data = await response.json();
+      // Check if Skinder is exhausted
+      if (response.status === 404 && data.message === 'rest') {
+        setExhaustedSkinder(true);
+        return;
+      }
       if (data.userInfo.username !== currentUser) {
         return data.userInfo;
       } else {
@@ -118,26 +125,34 @@ function MainPage() {
       <Header />
   
       {/* Render the container for user-related content */}
-      <div className="user-container">
-        {/* Conditionally render user card if randomUser exists */}
-        {randomUser && (
-          <div className="user-card">
+      <div className="main-user-container">
+        {exhaustedSkinder ? ( // Conditional rendering for exhausted Skinder in there are no unliked users
+          <div className="exhausted-skinder-container">
+            <p className="exhausted-skinder-text">{t('NB')}</p>
+            <img src={rest} alt="Exhausted Skinder" className="thanos" />
+          </div>
+        ) : randomUser && (
+          <div className="main-user-card">
             {/* Display user profile image */}
-            <img src={randomUser.profileImage} alt="User" className="user-image" />
+            <Link to={`/profile/${randomUser.username}`}>
+              <img src={randomUser.profileImage} alt="User" className="main-user-image" />
+            </Link>
             
             {/* Display user name */}
-            <h3 className="user-name">{randomUser.username}</h3>
+            <Link to={`/profile/${randomUser.username}`} className="main-user-name">
+              {randomUser.username}
+            </Link>
             
             {/* Display user info */}
-            <p className="user-info">{randomUser.userInfo}</p>
+            <p className="main-user-info">{randomUser.userInfo}</p>
             
             {/* Button group for user actions */}
-            <div className="button-group">
+            <div className="main-button-group">
               {/* Button to like user */}
-              <button onClick={handleLike} className="like-button">{t('like')}</button>
+              <button onClick={handleLike} className="main-like-button">{t('like')}</button>
               
               {/* Button to dislike user */}
-              <button onClick={handleDislike} className="dislike-button">{t('dislike')}</button>
+              <button onClick={handleDislike} className="main-dislike-button">{t('dislike')}</button>
             </div>
           </div>
         )}
@@ -155,7 +170,7 @@ function MainPage() {
           {/* Display match text and buttons */}
           <div className="match-text">
             <h2>{t('match alert')}</h2>
-            <div className="button-group">
+            <div className="match-button-group">
               {/* Button to keep scrolling */}
               <button onClick={handleKeepScrolling}>{t('keep scrolling')}</button>
               

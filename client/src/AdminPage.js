@@ -109,7 +109,8 @@ const AdminPage = () => {
   };
 
   const handleDeleteUser = async (username) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete user ${username}?`);
+    // Confirm the deletion
+    const confirmDelete = window.confirm(`${t('confirm delete')} ${username}?`);
     if (confirmDelete) {
       try {
         // Delete user
@@ -117,11 +118,9 @@ const AdminPage = () => {
           method: 'DELETE'
         });
         const data = await response.json();
-        alert(data.message); // Display success message
-        // Optionally, update the userProfiles state to reflect the changes
       } catch (error) {
         console.error('Error deleting user:', error);
-        alert('An error occurred while deleting the user.'); // Display error message
+        alert(`${t('delete error')}`); // Display error message
       }
     }
   };

@@ -13,6 +13,7 @@ import NotFound from './NotFound';
 import reportWebVitals from './reportWebVitals';
 import AdminPage from './AdminPage';
 import AdminEditInfo from './AdminEditInfo';
+import ViewProfilePage from './ViewProfilePage';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
+          <Route path="/profile/:username" element={<ViewProfilePage />} />
           <Route path="/editinfo" element={<EditInfoPage />} />
           <Route path="/chats" element={<DisplayChatsPage />} />
           <Route path="/admin" element={<AdminPage />} />

@@ -3,6 +3,7 @@
     "username": "Username",
     "password": "Password",
     "register": "Register",
+    "confirm password": "Confirm Password",
     "edit info": "Edit Your Information",
     "display chats": "Display Chats",
     "log out": "Log Out",
@@ -34,6 +35,11 @@
     "save changes": "Save Changes",
     "back": "Back",
     "confusion": "Confusion",
-    "404 page": "This is not the page you are looking for..."
+    "404 page": "This is not the page you are looking for...",
+    "user not found": "User could not be found",
+    "loading": "Loading...",
+    "confrim delete": "Are you sure you want to delete user",
+    "delete error": "Error occurred while deleting user",
+    "NB": "You have exhausted the entire Skinder"
   }
   

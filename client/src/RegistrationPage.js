@@ -1,34 +1,38 @@
 // client/src/RegistrationPage.js
-import React, { useState } from 'react'; // Import features from React
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook from react-router-dom
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import { useTranslation } from 'react-i18next'; // Import useTranslation hook from react-i18next
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from 'react-i18next';
 
 function RegistrationPage() {
-  const { t } = useTranslation(); // Initialize translation hook
-  const [username, setUsername] = useState(''); // State variable for username
-  const [password, setPassword] = useState(''); // State variable for password
-  const [errorMessage, setErrorMessage] = useState(''); // State variable for error message
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const { t } = useTranslation();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // New state for confirm password
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = async (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault();
+    if (password !== confirmPassword) { // Check if password matches confirm password
+      setErrorMessage('Passwords do not match');
+      return;
+    }
     try {
       const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ username, password }) // Send username and password in JSON format
+        body: JSON.stringify({ username, password })
       });
-      const data = await response.json(); // Parse response data
+      const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to register'); // Throw an error if registration fails
+        throw new Error(data.error || 'Failed to register');
       }
-      // Redirect to login page after successful registration
       navigate('/');
     } catch (error) {
-      setErrorMessage(error.message); // Set error message state if an error occurs
+      setErrorMessage(error.message);
     }
   };
 
@@ -63,10 +67,22 @@ function RegistrationPage() {
                     required 
                   />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">{t('confirm password')}:</label>
+                  <input 
+                    type="password" 
+                    id="confirmPassword" 
+                    name="confirmPassword" 
+                    className="form-control" 
+                    value={confirmPassword} 
+                    onChange={(e) => setConfirmPassword(e.target.value)} 
+                    required 
+                  />
+                </div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary" id="registration-view-btn">{t('register')}</button>
                 </div>
-                {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>} {/* Display error message if exists */}
+                {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>}
               </form>
             </div>
           </div>
