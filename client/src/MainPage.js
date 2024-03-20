@@ -46,8 +46,10 @@ function MainPage() {
     try {
       const response = await fetch(`/api/randomUser/${username}`);
       const data = await response.json();
+      console.log(data);
       // Check if Skinder is exhausted
-      if (response.status === 404 && data.message === 'rest') {
+      if (response.status === 600 && data.message === 'rest') {
+        console.log('Skinder is exhausted');
         setExhaustedSkinder(true);
         return;
       }
@@ -61,7 +63,6 @@ function MainPage() {
       return null;
     }
   };
-
   // When user is liked, it is written to the database in the back-end
   // If the liked user had already liked the current authenticated user a match is alerted
   const handleLike = async () => {

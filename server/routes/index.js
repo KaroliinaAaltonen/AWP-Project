@@ -107,17 +107,19 @@ router.get('/api/randomUser/:username', async (req, res) => {
     // Ensure likedUserIds is an array
     likedUserIds = likedUserIds || [];
 
+    // Exclude liked users and current user
+    const usersToExclude = [...likedUserIds, currentUser._id];
+
     // Fetch a random user excluding the currently logged-in user and those already liked
-    const user = await User.aggregate([
-      { $match: { _id: { $nin: [...likedUserIds, currentUser._id] } } }, // Exclude liked users and current user
-      { $sample: { size: 1 } } // Get a random user
-    ]);
-    if (!user || user.length === 1) { // 1 because there is the current user and admin in the database
+    const randomUser = await User.findOne({ _id: { $nin: usersToExclude }, username: { $ne: 'Admin' } }).skip(Math.floor(Math.random() * usersToExclude.length));
+
+    if (!randomUser) {
       // Check if there are no unliked users
-      return res.status(404).json({ message: 'rest' });
+      return res.status(600).json({ message: 'rest' });
     }
+
     // Return user information including the profile image URL
-    res.status(200).json({ userInfo: user[0] });
+    res.status(200).json({ userInfo: randomUser });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal server error' });
